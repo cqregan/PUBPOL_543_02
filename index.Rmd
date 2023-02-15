@@ -1,0 +1,39 @@
+---
+title: "index"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r}
+location='https://github.com/cqregan/PUBPOL_543_02/raw/main/'
+file='Use_Of_Force.csv'
+link=paste0(location,file)
+link
+```
+```{r}
+#getting the data TABLE from the file in the cloud:
+df = read.csv(file=url(link))
+df
+```
+
+```{r}
+df[['Occured_date_time']] <- as.Date(df[['Occured_date_time']], format = "%m/%d/%y")
+df
+```
+```{r}
+library(ggplot2)
+```
+
+```{r}
+baseHY=ggplot(data=df,
+            aes(x=Occured_date_time)) 
+histHY=baseHY + geom_histogram(aes(fill=Incident_Type), 
+                              color='black')
+histHY
+```
+```{r}
+histHY + ggtitle("When did use of force incidences occur in Seattle?") 
+
+```
+
